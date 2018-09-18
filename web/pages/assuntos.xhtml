@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      template="/templates/modeloSistema.xhtml">
+    
+    <ui:define name="menu"> 
+        <ui:include src="/includes/menuPrincipal.xhtml" />
+    </ui:define> <!-- A tag ui:define ela substitui a tag ui:insert do arquivo 'modeloSistema' -->
+    
+    <ui:define name="conteudo" >
+        
+        
+            
+       
+       <h:form> 
+            <p:panel>
+                <center> 
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Informação"/>
+                        <p:inputText value="#{assuntoBean.assunto.informacao}" />
+                       <p:outputLabel value="Observação"/>
+                       <p:inputText value="#{assuntoBean.assunto.observacao}" />
+
+
+                    </p:panelGrid>     </center>   
+                <center> 
+                    <p:commandButton value="Salvar" action="#{assuntoBean.salvarAssunto()}" process="@form" update=":formulario:tabela" />
+
+
+                </center>
+            </p:panel>
+        </h:form>
+        
+        
+        
+        <h:form id="formulario">
+            <p:dataTable id="tabela" value="#{assuntoBean.lista}" var="assunto"
+                                 emptyMessage="Lista vazia!" paginator="true" rows="4">
+
+                        <f:facet name="header">
+                            Assuntos dos Livros
+                        </f:facet>
+                        <p:column headerText="Informação" style="text-align: center">
+                            <h:outputText value="#{assunto.informacao}" />
+                        </p:column>
+                        <p:column headerText="Observação" style="text-align: center">
+                            <h:outputText value="#{assunto.observacao}" />
+                        </p:column>
+                       
+                <p:column> 
+
+
+                        <h:form> 
+
+                            <p:commandButton value="Excluir"  action="#{assuntoBean.excluirAssunto()}" process="@form" update=":formulario:tabela" >
+
+                                <f:setPropertyActionListener  value="#{assunto}" target="#{assuntoBean.assunto}"/>
+                            </p:commandButton>
+
+                        </h:form>  
+                    </p:column>
+                        
+                    </p:dataTable>
+                    
+                </h:form>
+           
+   
+        
+    </ui:define>  <!-- A tag ui:define ela substitui a tag ui:insert do arquivo 'modeloSistema' -->
+    
+    
+</ui:composition>
+

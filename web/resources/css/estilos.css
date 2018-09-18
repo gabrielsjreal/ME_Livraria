@@ -1,0 +1,23 @@
+
+/* 
+    Created on : 02/09/2018, 21:04:15
+    Author     : Gabriel SOuza
+*/
+@charset "ISO-8859-1";
+
+.ui-layout-north{
+    z-index:20 !important;
+    overflow:visible !important;;
+}
+
+.ui-layout-north .ui-layout-unit-content{
+    overflow:visible !important;
+}
+
+/*esse arquivo é para corrigir um bug do menu superior */
+
+
+.ui-widget, .ui-widget .ui-widget {
+font-size: 12px !important;
+}
+

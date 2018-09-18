@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:b="http://bootsfaces.net/ui"
+                template="/templates/modeloSistema.xhtml">
+
+    <ui:define name="menu"> 
+        <ui:include src="/includes/menuPrincipal.xhtml" />
+    </ui:define> <!-- A tag ui:define ela substitui a tag ui:insert do arquivo 'modeloSistema' -->
+
+    <ui:define name="conteudo" >
+
+
+
+
+        <h:form> 
+            <p:panel>
+                <center> 
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Titulo"/>
+                        <p:inputText value="#{livroBean.livro.titulo}" />
+
+                        <p:outputLabel value="Autor(es)"/>
+                        <p:inputText  value="#{livroBean.livro.autores}"/>
+
+                        <p:outputLabel value="Ano da Publicação"/>
+                        <b:dateTimePicker value="#{livroBean.livro.ano}" 
+                                          mode="toggle-icon" 
+                                          showButtonPanel="true" 
+                                          format="DD/MM/YYYY"/>
+                        <p:outputLabel value="Cidade"/>
+                        <p:inputText  value="#{livroBean.livro.cidade}"/>
+
+                        <p:outputLabel value="Tipo"/>
+                        <b:selectOneMenu value="#{livroBean.tipo}" converter="generic">
+
+                            <f:selectItems value="#{tipoBean.lista}" var="tipo" itemValue="#{assunto}" itemLabel="#{tipo.tipo}" />
+                        </b:selectOneMenu>
+
+                        <p:outputLabel value="Assunto"/>
+                        <b:selectOneMenu value="#{livroBean.assunto}" converter="generic">
+
+                            <f:selectItems value="#{assuntoBean.lista}" var="assunto" itemValue="#{assunto}" itemLabel="#{assunto.informacao}" />
+                        </b:selectOneMenu>
+
+                        <p:outputLabel value="Resumo"/>
+                        <b:inputTextarea value="#{livroBean.livro.resumo}" />
+
+
+                    </p:panelGrid>     </center>   
+                <center> 
+                    <p:commandButton value="Salvar" action="#{livroBean.salvarLivro()}" process="@form" update=":formulario:tabela" />
+
+
+                </center>
+            </p:panel>
+        </h:form>
+
+
+
+        <h:form id="formulario">
+            <p:dataTable id="tabela" value="#{livroBean.lista}" var="livro"
+                         emptyMessage="Lista vazia!" paginator="true" rows="4">
+
+                <f:facet name="header">
+                    Lista de Livros
+                </f:facet>
+                
+                 <p:column headerText="ID" style="text-align: center; width: 15%;">
+                     <h:outputText value="#{livro.id}" />
+                </p:column>
+                
+                <p:column headerText="Titulo" style="text-align: center; width: 15%;">
+                    <h:outputText value="#{livro.titulo}" />
+                </p:column>
+                
+                 <p:column headerText="Autor" style="text-align: center; width: 15%;">
+                     <h:outputText value="#{livro.autores}" />
+                </p:column>
+
+                <p:column headerText="Origem" style="text-align: center; width: 15%;">
+                    <h:outputText value="#{livro.cidade}" />
+                </p:column>
+
+
+                <p:column headerText="Ano" style="text-align: center; width: 15%;">
+                    <h:outputText value="#{livro.ano}">
+                        <f:convertDateTime pattern="yyyy" />
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="Assunto" style="text-align: center; width: 15%;">
+                    <h:outputText value="#{livro.assuntoId.informacao}" />
+                                                    </p:column>
+
+               
+                    
+                    <p:column headerText="Tipo" style="text-align: center; width: 15%;">
+                        <h:outputText value="#{livro.tipoId.descricao}" />
+                                                    </p:column>
+
+                    <p:column headerText="Resumo" style="text-align: center; width: 15%;" >
+                                                        <h:outputText value="#{livro.resumo}" />
+                                                    </p:column>
+                    
+                <p:column style="text-align: center; width: 15%;"> 
+                    
+                   
+                  
+
+                        <p:commandButton value="Excluir"  action="#{livroBean.excluirLivro()}" process="@form" update=":formulario:tabela" >
+
+                            <f:setPropertyActionListener  value="#{livro}" target="#{livroBean.livro}"/>
+                        </p:commandButton>
+
+                   
+                </p:column>
+
+            </p:dataTable>
+
+        </h:form>
+
+
+
+    </ui:define>  <!-- A tag ui:define ela substitui a tag ui:insert do arquivo 'modeloSistema' -->
+
+
+</ui:composition>
+

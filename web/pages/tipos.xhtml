@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      template="/templates/modeloSistema.xhtml">
+    
+    <ui:define name="menu"> 
+        <ui:include src="/includes/menuPrincipal.xhtml" />
+    </ui:define> <!-- A tag ui:define ela substitui a tag ui:insert do arquivo 'modeloSistema' -->
+    
+    <ui:define name="conteudo" >
+        
+        
+            
+       
+       <h:form> 
+            <p:panel>
+                <center> 
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Tipo"/>
+                        <p:inputText value="#{tipoBean.tipo.tipo}" />
+                       <p:outputLabel value="Descrição"/>
+                       <p:inputText value="#{tipoBean.tipo.descricao}" />
+
+
+                    </p:panelGrid>     </center>   
+                <center> 
+                    <p:commandButton value="Salvar" action="#{tipoBean.salvarTipo()}" process="@form" update=":formulario:tabela" />
+
+
+                </center>
+            </p:panel>
+        </h:form>
+        
+        
+        
+        <h:form id="formulario">
+            <p:dataTable id="tabela" value="#{tipoBean.lista}" var="tipo"
+                                 emptyMessage="Lista vazia!" paginator="true" rows="4">
+
+                        <f:facet name="header">
+                            Tipos dos Livros
+                        </f:facet>
+                        <p:column headerText="Tipo" style="text-align: center">
+                            <h:outputText value="#{tipo.tipo}" />
+                        </p:column>
+                        <p:column headerText="Descrição" style="text-align: center; width: 25%;">
+                            <h:outputText value="#{tipo.descricao}" />
+                        </p:column>
+                       
+                <p:column> 
+
+
+                        <h:form> 
+
+                            <p:commandButton value="Excluir"  action="#{tipoBean.excluirTipo()}" process="@form" update=":formulario:tabela" >
+
+                                <f:setPropertyActionListener  value="#{tipo}" target="#{tipoBean.tipo}"/>
+                            </p:commandButton>
+
+                        </h:form>  
+                    </p:column>
+                        
+                    </p:dataTable>
+                    
+                </h:form>
+           
+   
+        
+    </ui:define>  <!-- A tag ui:define ela substitui a tag ui:insert do arquivo 'modeloSistema' -->
+    
+    
+</ui:composition>
+
